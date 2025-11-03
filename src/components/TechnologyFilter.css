@@ -1,0 +1,44 @@
+.technology-filter {
+    margin-bottom: 20px;
+}
+
+.technology-filter h3 {
+    margin: 0 0 15px 0;
+    color: #495057;
+    text-align: center;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.filter-emoji {
+    font-size: 1.1em;
+}

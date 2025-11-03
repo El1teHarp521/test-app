@@ -1,0 +1,70 @@
+.technology-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-left-width: 4px;
+    border-left-style: solid;
+}
+
+.technology-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.status-icon {
+    font-size: 1.2em;
+}
+
+.status-badge {
+    margin-top: 12px;
+    padding: 4px 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.status-not-started {
+    border-left-color: #ff6b6b;
+    background-color: #fff5f5;
+}
+
+.status-in-progress {
+    border-left-color: #4ecdc4;
+    background-color: #f0fff4;
+}
+
+.status-completed {
+    border-left-color: #45b7d1;
+    background-color: #f0f8ff;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
