@@ -3,38 +3,105 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  background-color: #000000;
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
 .App-header {
   margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  padding: 40px 30px;
+  background-color: #111111;
+  position: relative;
+  overflow: hidden;
+}
+
+.App-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4ecdc4, #45b7d1);
 }
 
 .App-header h1 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 2.5em;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .App-header p {
-  color: #7f8c8d;
+  color: #cccccc;
   font-size: 1.1em;
+  margin: 0;
+  line-height: 1.6;
 }
 
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
+  background-color: #000000;
 }
 
 .no-results {
   text-align: center;
-  padding: 40px;
-  color: #6c757d;
+  padding: 50px 40px;
+  color: #888888;
   font-size: 1.1em;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  border: 2px dashed #dee2e6;
+  background-color: #111111;
+  font-style: italic;
+}
+
+.search-box {
+  margin-bottom: 25px;
+  padding: 25px;
+  background-color: #111111;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1em;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  border: none;
+}
+
+.search-input:focus {
+  outline: none;
+  background-color: #222222;
+}
+
+.search-input::placeholder {
+  color: #666666;
+}
+
+.search-results {
+  display: block;
+  color: #4ecdc4;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 40px;
+  color: #4ecdc4;
+  font-size: 1.2em;
+  background-color: #111111;
+  margin: 20px;
+}
+
+.technology-with-notes {
+  margin-bottom: 25px;
 }

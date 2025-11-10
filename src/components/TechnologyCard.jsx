@@ -9,16 +9,23 @@ function TechnologyCard({
 }) {
 
     const handleClick = () => {
-        const statusOrder = ['not-started', 'in-progress', 'completed'];
-        const currentIndex = statusOrder.indexOf(status);
-        const nextIndex = (currentIndex + 1) % statusOrder.length;
-        const nextStatus = statusOrder[nextIndex];
+        // Проверяем, что функция существует перед вызовом
+        if (typeof onStatusChange === 'function') {
+            const statusOrder = ['not-started', 'in-progress', 'completed'];
+            const safeStatus = status || 'not-started';
+            const currentIndex = statusOrder.indexOf(safeStatus);
+            const nextIndex = (currentIndex + 1) % statusOrder.length;
+            const nextStatus = statusOrder[nextIndex];
 
-        onStatusChange(id, nextStatus);
+            onStatusChange(id, nextStatus);
+        } else {
+            console.warn('onStatusChange is not a function');
+        }
     };
 
     const getStatusClass = () => {
-        switch (status) {
+        const safeStatus = status || 'not-started';
+        switch (safeStatus) {
             case 'completed':
                 return 'status-completed';
             case 'in-progress':
@@ -26,12 +33,13 @@ function TechnologyCard({
             case 'not-started':
                 return 'status-not-started';
             default:
-                return '';
+                return 'status-not-started';
         }
     };
 
     const getStatusIcon = () => {
-        switch (status) {
+        const safeStatus = status || 'not-started';
+        switch (safeStatus) {
             case 'completed':
                 return '✅';
             case 'in-progress':
@@ -39,12 +47,13 @@ function TechnologyCard({
             case 'not-started':
                 return '⏳';
             default:
-                return '';
+                return '⏳';
         }
     };
 
     const getStatusText = () => {
-        switch (status) {
+        const safeStatus = status || 'not-started';
+        switch (safeStatus) {
             case 'completed':
                 return 'Завершено';
             case 'in-progress':
@@ -52,7 +61,7 @@ function TechnologyCard({
             case 'not-started':
                 return 'Не начато';
             default:
-                return status;
+                return 'Не начато';
         }
     };
 

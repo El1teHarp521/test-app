@@ -1,0 +1,47 @@
+.notes-section {
+    margin-top: 15px;
+    padding: 20px;
+    background-color: #111111;
+    position: relative;
+}
+
+.notes-section h4 {
+    margin: 0 0 15px 0;
+    color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.notes-textarea {
+    width: 100%;
+    padding: 15px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1em;
+    resize: vertical;
+    min-height: 100px;
+    box-sizing: border-box;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    line-height: 1.5;
+    border: none;
+}
+
+.notes-textarea:focus {
+    outline: none;
+    background-color: #222222;
+}
+
+.notes-textarea::placeholder {
+    color: #888888;
+    font-style: italic;
+}
+
+.notes-hint {
+    font-size: 0.85em;
+    color: #cccccc;
+    margin-top: 8px;
+    text-align: right;
+    font-style: italic;
+}

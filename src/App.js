@@ -4,65 +4,47 @@ import TechnologyCard from './components/TechnologyCard';
 import ProgressHeader from './components/ProgressHeader';
 import QuickActions from './components/QuickActions';
 import TechnologyFilter from './components/TechnologyFilter';
+import TechnologyNotes from './components/TechnologyNotes';
+import useTechnologies from './hooks/useTechnologies';
 
 function App() {
-  const [technologies, setTechnologies] = useState([
-    {
-      id: 1,
-      title: 'React Components',
-      description: 'Изучение базовых компонентов',
-      status: 'not-started'
-    },
-    {
-      id: 2,
-      title: 'JSX Syntax',
-      description: 'Освоение синтаксиса JSX',
-      status: 'not-started'
-    },
-    {
-      id: 3,
-      title: 'State Management',
-      description: 'Работа с состоянием компонентов',
-      status: 'not-started'
-    },
-    {
-      id: 4,
-      title: 'HTTP & APIs',
-      description: 'Научиться получать данные из API',
-      status: 'not-started'
-    },
-    {
-      id: 5,
-      title: 'React Hooks',
-      description: 'Изучение встроенных хуков React',
-      status: 'not-started'
-    }
-  ]);
+  const {
+    technologies,
+    updateStatus,
+    updateNotes,
+    updateAllStatuses,
+    progress,
+    stats
+  } = useTechnologies();
 
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleStatusChange = (id, newStatus) => {
-    setTechnologies(prevTech =>
-      prevTech.map(tech =>
-        tech.id === id ? { ...tech, status: newStatus } : tech
-      )
-    );
-  };
-
-  const handleUpdateAllStatuses = (status) => {
-    setTechnologies(prevTech =>
-      prevTech.map(tech => ({ ...tech, status }))
-    );
-  };
-
-  const handleRandomSelect = (id) => {
-    handleStatusChange(id, 'in-progress');
-  };
-
+  // Фильтрация технологий по статусу и поисковому запросу
   const filteredTechnologies = technologies.filter(tech => {
-    if (activeFilter === 'all') return true;
-    return tech.status === activeFilter;
+    // Фильтр по статусу
+    const statusMatch = activeFilter === 'all' || tech.status === activeFilter;
+
+    // Фильтр по поисковому запросу
+    const searchMatch = searchQuery === '' ||
+      tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tech.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (tech.notes && tech.notes.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    return statusMatch && searchMatch;
   });
+
+  const handleMarkAllCompleted = () => {
+    updateAllStatuses('completed');
+  };
+
+  const handleResetAll = () => {
+    updateAllStatuses('not-started');
+  };
+
+  const handleRandomSelect = (techId) => {
+    updateStatus(techId, 'in-progress');
+  };
 
   return (
     <div className="App">
@@ -71,12 +53,31 @@ function App() {
         <p>Отслеживай свой прогресс в освоении новых технологий</p>
       </header>
 
-      <ProgressHeader technologies={technologies} />
+      <ProgressHeader
+        technologies={technologies}
+        progress={progress}
+        stats={stats}
+      />
+
       <QuickActions
         technologies={technologies}
-        onUpdateAllStatuses={handleUpdateAllStatuses}
+        onMarkAllCompleted={handleMarkAllCompleted}
+        onResetAll={handleResetAll}
         onRandomSelect={handleRandomSelect}
       />
+
+      {/* Компонент поиска */}
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Поиск по названию, описанию или заметкам..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+        <span className="search-results">Найдено: {filteredTechnologies.length}</span>
+      </div>
+
       <TechnologyFilter
         activeFilter={activeFilter}
         onFilterChange={setActiveFilter}
@@ -84,19 +85,25 @@ function App() {
 
       <main className="main-content">
         {filteredTechnologies.map(tech => (
-          <TechnologyCard
-            key={tech.id}
-            id={tech.id}
-            title={tech.title}
-            description={tech.description}
-            status={tech.status}
-            onStatusChange={handleStatusChange}
-          />
+          <div key={tech.id} className="technology-with-notes">
+            <TechnologyCard
+              id={tech.id}
+              title={tech.title}
+              description={tech.description}
+              status={tech.status}
+              onStatusChange={updateStatus}
+            />
+            <TechnologyNotes
+              notes={tech.notes}
+              onNotesChange={updateNotes}
+              techId={tech.id}
+            />
+          </div>
         ))}
 
         {filteredTechnologies.length === 0 && (
           <div className="no-results">
-            <p>🚫 Нет технологий, соответствующих выбранному фильтру</p>
+            <p>🚫 Нет технологий, соответствующих выбранному фильтру или поисковому запросу</p>
           </div>
         )}
       </main>
