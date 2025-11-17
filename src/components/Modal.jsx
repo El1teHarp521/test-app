@@ -5,7 +5,9 @@ function Modal({
     onClose,
     title,
     children,
-    size = 'medium'
+    size = 'medium',
+    showFooter = false,
+    footerContent
 }) {
     if (!isOpen) return null;
 
@@ -27,6 +29,11 @@ function Modal({
                 <div className="modal-body">
                     {children}
                 </div>
+                {showFooter && footerContent && (
+                    <div className="modal-footer">
+                        {footerContent}
+                    </div>
+                )}
             </div>
         </div>
     );

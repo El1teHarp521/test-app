@@ -1,47 +1,56 @@
 .notes-section {
-    margin-top: 15px;
-    padding: 20px;
-    background-color: #111111;
-    position: relative;
+    margin-top: 0.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.notes-section:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .notes-section h4 {
-    margin: 0 0 15px 0;
+    margin: 0 0 1rem 0;
     color: #ffffff;
-    font-size: 1.1em;
+    font-size: 1rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
 }
 
 .notes-textarea {
     width: 100%;
-    padding: 15px;
-    font-family: 'Arial', sans-serif;
-    font-size: 1em;
+    padding: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
     resize: vertical;
     min-height: 100px;
     box-sizing: border-box;
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #e0e0e0;
     transition: all 0.3s ease;
     line-height: 1.5;
-    border: none;
 }
 
 .notes-textarea:focus {
     outline: none;
-    background-color: #222222;
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
 .notes-textarea::placeholder {
-    color: #888888;
+    color: #888;
     font-style: italic;
 }
 
 .notes-hint {
-    font-size: 0.85em;
-    color: #cccccc;
-    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.5rem;
     text-align: right;
     font-style: italic;
 }

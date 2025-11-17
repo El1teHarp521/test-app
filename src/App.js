@@ -1,36 +1,69 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
-import TechnologyCard from './components/TechnologyCard';
+import Navigation from './components/Navigation';
+import Home from './pages/Home';
+import TechnologyList from './pages/TechnologyList';
+import TechnologyDetail from './pages/TechnologyDetail';
+import AddTechnology from './pages/AddTechnology';
+import Statistics from './pages/Statistics';
+import Settings from './pages/Settings';
+import SteamLibraryImporter from './components/SteamLibraryImporter';
+import TechnologySearch from './components/TechnologySearch';
+import useTechnologiesWithApi from './hooks/useTechnologiesWithApi';
 import ProgressHeader from './components/ProgressHeader';
 import QuickActions from './components/QuickActions';
 import TechnologyFilter from './components/TechnologyFilter';
+import TechnologyCard from './components/TechnologyCard';
 import TechnologyNotes from './components/TechnologyNotes';
-import useTechnologies from './hooks/useTechnologies';
 
 function App() {
   const {
     technologies,
+    loading,
+    error,
+    apiStatus,
+    progress,
+    stats,
+    refetch,
     updateStatus,
     updateNotes,
     updateAllStatuses,
-    progress,
-    stats
-  } = useTechnologies();
+    addTechnology,
+    addMultipleTechnologies
+  } = useTechnologiesWithApi();
 
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  const [showSteamImporter, setShowSteamImporter] = useState(false);
 
-  // Фильтрация технологий по статусу и поисковому запросу
-  const filteredTechnologies = technologies.filter(tech => {
-    // Фильтр по статусу
+  const handleSearch = async (query) => {
+    if (!query.trim()) {
+      setSearchResults(null);
+      return;
+    }
+
+    const results = technologies.filter(tech =>
+      tech.title.toLowerCase().includes(query.toLowerCase()) ||
+      tech.description.toLowerCase().includes(query.toLowerCase()) ||
+      (tech.tags && tech.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) ||
+      tech.category.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    setSearchResults(results);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setSearchResults(null);
+  };
+
+  const filteredTechnologies = searchResults || technologies.filter(tech => {
     const statusMatch = activeFilter === 'all' || tech.status === activeFilter;
-
-    // Фильтр по поисковому запросу
     const searchMatch = searchQuery === '' ||
       tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (tech.notes && tech.notes.toLowerCase().includes(searchQuery.toLowerCase()));
-
+      tech.description.toLowerCase().includes(searchQuery.toLowerCase());
     return statusMatch && searchMatch;
   });
 
@@ -42,15 +75,31 @@ function App() {
     updateAllStatuses('not-started');
   };
 
-  const handleRandomSelect = (techId) => {
-    updateStatus(techId, 'in-progress');
+  const handleImportFromSteam = () => {
+    setShowSteamImporter(!showSteamImporter);
   };
 
-  return (
+  // ОБНОВЛЕННЫЙ ОБРАБОТЧИК ИМПОРТА
+  const handleGamesImported = (importedGames) => {
+    if (addMultipleTechnologies) {
+      addMultipleTechnologies(importedGames);
+    } else {
+      importedGames.forEach(game => {
+        addTechnology(game);
+      });
+    }
+    
+    setTimeout(() => {
+      setShowSteamImporter(false);
+      refetch();
+    }, 1000);
+  };
+
+  const HomePage = () => (
     <div className="App">
-      <header className="App-header">
-        <h1>Мой Трекер Изучения Технологий</h1>
-        <p>Отслеживай свой прогресс в освоении новых технологий</p>
+      <header className="page-header">
+        <h1>🚀 Мой Трекер Изучения Технологий</h1>
+        <p>Отслеживай свой прогресс в освоении новых технологий и игр</p>
       </header>
 
       <ProgressHeader
@@ -63,35 +112,60 @@ function App() {
         technologies={technologies}
         onMarkAllCompleted={handleMarkAllCompleted}
         onResetAll={handleResetAll}
-        onRandomSelect={handleRandomSelect}
+        onImportFromSteam={handleImportFromSteam}
       />
 
-      {/* Компонент поиска */}
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Поиск по названию, описанию или заметкам..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
+      {showSteamImporter && (
+        <SteamLibraryImporter 
+          onGamesImported={handleGamesImported}
+          existingTechnologies={technologies}
         />
-        <span className="search-results">Найдено: {filteredTechnologies.length}</span>
+      )}
+
+      <div className="search-box">
+        <TechnologySearch
+          onSearch={handleSearch}
+          onClear={handleClearSearch}
+          placeholder="Поиск по названию, описанию, тегам..."
+        />
+        
+        <TechnologyFilter
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+        />
       </div>
 
-      <TechnologyFilter
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
+      {loading && (
+        <div className="text-center mt-4">
+          <div className="spinner"></div>
+          <p className="mt-2">Загрузка технологий...</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="error-state text-center mt-4">
+          <p>⚠️ {error}</p>
+          <button onClick={refetch} className="btn btn-primary mt-2">
+            Попробовать снова
+          </button>
+        </div>
+      )}
 
       <main className="main-content">
-        {filteredTechnologies.map(tech => (
-          <div key={tech.id} className="technology-with-notes">
+        {!loading && !error && filteredTechnologies.map(tech => (
+          <div key={tech.id} className="technology-with-notes fade-in">
             <TechnologyCard
               id={tech.id}
               title={tech.title}
               description={tech.description}
               status={tech.status}
               onStatusChange={updateStatus}
+              category={tech.category}
+              difficulty={tech.difficulty}
+              tags={tech.tags}
+              estimatedHours={tech.estimatedHours}
+              resources={tech.resources}
+              steamData={tech.steamData}
             />
             <TechnologyNotes
               notes={tech.notes}
@@ -101,13 +175,53 @@ function App() {
           </div>
         ))}
 
-        {filteredTechnologies.length === 0 && (
+        {!loading && !error && filteredTechnologies.length === 0 && (
           <div className="no-results">
             <p>🚫 Нет технологий, соответствующих выбранному фильтру или поисковому запросу</p>
+            <button onClick={handleClearSearch} className="btn btn-secondary mt-2">
+              Очистить поиск
+            </button>
           </div>
         )}
       </main>
     </div>
+  );
+
+  return (
+    <Router>
+      <div className="app-container">
+        <Navigation apiStatus={apiStatus} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/technologies" element={<TechnologyList technologies={technologies} />} />
+          <Route path="/technology/:techId" element={<TechnologyDetail />} />
+          <Route path="/add-technology" element={<AddTechnology onTechnologyAdded={addTechnology} />} />
+          <Route path="/statistics" element={<Statistics technologies={technologies} />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/steam-import" element={
+            <div className="page">
+              <div className="page-header">
+                <h1>🎮 Импорт из Steam</h1>
+                <p>Импортируйте ваши игры из Steam библиотеки</p>
+              </div>
+              <SteamLibraryImporter 
+                onGamesImported={handleGamesImported}
+                existingTechnologies={technologies}
+              />
+            </div>
+          } />
+          <Route path="*" element={
+            <div className="page">
+              <div className="error-page text-center">
+                <h1>404 - Страница не найдена</h1>
+                <p>Запрошенная страница не существует.</p>
+                <a href="/" className="btn btn-primary mt-3">Вернуться на главную</a>
+              </div>
+            </div>
+          } />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -6,6 +6,7 @@ function QuickActions({
     onMarkAllCompleted,
     onResetAll,
     onRandomSelect,
+    onImportFromSteam,
     technologies
 }) {
     const [showExportModal, setShowExportModal] = useState(false);
@@ -88,6 +89,13 @@ function QuickActions({
                     className="action-btn export-btn"
                 >
                     📤 Экспорт данных
+                </button>
+
+                <button
+                    onClick={onImportFromSteam}
+                    className="action-btn steam-import"
+                >
+                    🎮 Импорт из Steam
                 </button>
             </div>
 

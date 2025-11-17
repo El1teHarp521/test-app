@@ -1,0 +1,279 @@
+.stats-overview {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.main-stat {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-circle {
+    margin: 1.5rem 0;
+}
+
+.circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(#ffffff var(--progress, 0%), rgba(255, 255, 255, 0.1) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.circle::before {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #0a0a0a;
+}
+
+.percentage {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+
+.main-stat p {
+    color: #b0b0b0;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.stats-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.stat-item {
+    display: grid;
+    grid-template-columns: 120px 60px 1fr 60px;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.8s ease;
+    position: relative;
+}
+
+.progress-fill.completed {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.progress-fill.in-progress {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.progress-fill.not-started {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.stat-percentage {
+    text-align: right;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.chart-section {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+.chart-section h2 {
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.chart {
+    display: flex;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.chart-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: flex 0.8s ease;
+    color: #0a0a0a;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-segment.completed {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.chart-segment.in-progress {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.chart-segment.not-started {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.chart-segment span {
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.insights {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.insights h2 {
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.insight {
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid;
+    transition: all 0.3s ease;
+}
+
+.insight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.insight.positive {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.insight.warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #f59e0b;
+}
+
+.insight.info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+}
+
+.insight h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.insight p {
+    margin: 0;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .stats-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .chart {
+        height: 80px;
+    }
+
+    .chart-segment span {
+        font-size: 0.8rem;
+    }
+
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .circle::before {
+        width: 100px;
+        height: 100px;
+    }
+
+    .percentage {
+        font-size: 1.8rem;
+    }
+}

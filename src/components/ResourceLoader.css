@@ -1,0 +1,145 @@
+.resource-loader {
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.resource-toggle {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    padding: 1rem;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.resource-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.toggle-icon {
+    font-size: 0.8rem;
+    color: #b0b0b0;
+}
+
+.resources-content {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resources-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    color: #b0b0b0;
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.resources-error,
+.no-resources {
+    text-align: center;
+    padding: 1rem;
+    color: #b0b0b0;
+}
+
+.retry-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.resources-list h4 {
+    margin: 0 0 1rem 0;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.resource-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.resource-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.resource-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.resource-type {
+    background: rgba(255, 255, 255, 0.1);
+    color: #b0b0b0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resource-description {
+    color: #b0b0b0;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
+.resource-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.3s ease;
+}
+
+.resource-link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

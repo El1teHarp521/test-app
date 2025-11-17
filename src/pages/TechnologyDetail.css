@@ -1,0 +1,134 @@
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.technology-detail {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.detail-section {
+    padding: 1.5rem;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.detail-section:last-child {
+    border-bottom: none;
+}
+
+.detail-section h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.detail-section p {
+    color: #7f8c8d;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.status-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.status-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #e9ecef;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    flex: 1;
+    min-width: 120px;
+}
+
+.status-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.status-btn.active.not-started {
+    background: #fdedec;
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.status-btn.active.in-progress {
+    background: #fef5e7;
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+.status-btn.active.completed {
+    background: #d5f4e6;
+    border-color: #27ae60;
+    color: #27ae60;
+}
+
+.current-status {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.status-not-started {
+    color: #e74c3c;
+}
+
+.status-in-progress {
+    color: #f39c12;
+}
+
+.status-completed {
+    color: #27ae60;
+}
+
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.info-item strong {
+    color: #2c3e50;
+}
+
+.info-item span {
+    color: #7f8c8d;
+}
