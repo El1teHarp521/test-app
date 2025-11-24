@@ -1,0 +1,101 @@
+.data-exporter {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.data-exporter h3 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-select {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.checkbox-group {
+  margin-top: 1rem;
+}
+
+.help-text {
+  color: #b0b0b0;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.export-warning {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #f59e0b;
+}
+
+.export-btn {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.export-stats {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.export-stats h4 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.export-stats ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.export-stats li {
+  color: #b0b0b0;
+  padding: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.export-stats strong {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .data-exporter {
+    padding: 1.5rem;
+  }
+}

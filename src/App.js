@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import './App.css';
 import Navigation from './components/Navigation';
-import Home from './pages/Home';
 import TechnologyList from './pages/TechnologyList';
 import TechnologyDetail from './pages/TechnologyDetail';
 import AddTechnology from './pages/AddTechnology';
@@ -50,7 +49,7 @@ function App() {
       (tech.tags && tech.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) ||
       tech.category.toLowerCase().includes(query.toLowerCase())
     );
-    
+
     setSearchResults(results);
   };
 
@@ -79,7 +78,6 @@ function App() {
     setShowSteamImporter(!showSteamImporter);
   };
 
-  // ОБНОВЛЕННЫЙ ОБРАБОТЧИК ИМПОРТА
   const handleGamesImported = (importedGames) => {
     if (addMultipleTechnologies) {
       addMultipleTechnologies(importedGames);
@@ -88,7 +86,7 @@ function App() {
         addTechnology(game);
       });
     }
-    
+
     setTimeout(() => {
       setShowSteamImporter(false);
       refetch();
@@ -113,10 +111,11 @@ function App() {
         onMarkAllCompleted={handleMarkAllCompleted}
         onResetAll={handleResetAll}
         onImportFromSteam={handleImportFromSteam}
+        onStatusUpdate={updateStatus}
       />
 
       {showSteamImporter && (
-        <SteamLibraryImporter 
+        <SteamLibraryImporter
           onGamesImported={handleGamesImported}
           existingTechnologies={technologies}
         />
@@ -128,7 +127,7 @@ function App() {
           onClear={handleClearSearch}
           placeholder="Поиск по названию, описанию, тегам..."
         />
-        
+
         <TechnologyFilter
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
@@ -204,7 +203,7 @@ function App() {
                 <h1>🎮 Импорт из Steam</h1>
                 <p>Импортируйте ваши игры из Steam библиотеки</p>
               </div>
-              <SteamLibraryImporter 
+              <SteamLibraryImporter
                 onGamesImported={handleGamesImported}
                 existingTechnologies={technologies}
               />

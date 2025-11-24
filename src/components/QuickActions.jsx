@@ -1,156 +1,105 @@
-import { useState } from 'react';
-import Modal from './Modal';
 import './QuickActions.css';
 
-function QuickActions({
-    onMarkAllCompleted,
-    onResetAll,
-    onRandomSelect,
-    onImportFromSteam,
-    technologies
+function QuickActions({ 
+  technologies, 
+  onMarkAllCompleted, 
+  onResetAll, 
+  onImportFromSteam,
+  onStatusUpdate // Добавляем эту функцию
 }) {
-    const [showExportModal, setShowExportModal] = useState(false);
-    const [showRandomModal, setShowRandomModal] = useState(false);
-    const [randomTech, setRandomTech] = useState(null);
+  
+  const handleStartRandomTech = () => {
+    const notStartedTechs = technologies.filter(tech => tech.status === 'not-started');
+    
+    if (notStartedTechs.length === 0) {
+      alert('🎉 Все технологии уже начаты или завершены!');
+      return;
+    }
+    
+    const randomTech = notStartedTechs[Math.floor(Math.random() * notStartedTechs.length)];
+    
+    if (window.confirm(`🎲 Начать изучение "${randomTech.title}"?`)) {
+      // Меняем статус технологии на "в процессе"
+      if (onStatusUpdate) {
+        onStatusUpdate(randomTech.id, 'in-progress');
+        alert(`🚀 Начинаем изучение: ${randomTech.title}`);
+      }
+    }
+  };
 
-    const handleExport = () => {
-        const data = {
-            exportedAt: new Date().toISOString(),
-            technologies: technologies,
-            stats: {
-                total: technologies.length,
-                completed: technologies.filter(t => t.status === 'completed').length,
-                inProgress: technologies.filter(t => t.status === 'in-progress').length,
-                notStarted: technologies.filter(t => t.status === 'not-started').length
-            }
-        };
-        const dataStr = JSON.stringify(data, null, 2);
+  const getStats = () => {
+    const total = technologies.length;
+    const completed = technologies.filter(t => t.status === 'completed').length;
+    const inProgress = technologies.filter(t => t.status === 'in-progress').length;
+    const notStarted = technologies.filter(t => t.status === 'not-started').length;
+    
+    return { total, completed, inProgress, notStarted };
+  };
 
-        // Создаем blob и ссылку для скачивания
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `tech-tracker-export-${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+  const stats = getStats();
 
-        setShowExportModal(true);
-    };
-
-    const handleRandomSelect = () => {
-        const notStartedTech = technologies.filter(tech => tech.status === 'not-started');
-        if (notStartedTech.length === 0) {
-            alert('Все технологии уже начаты или завершены!');
-            return;
-        }
-        const random = notStartedTech[Math.floor(Math.random() * notStartedTech.length)];
-        setRandomTech(random);
-        setShowRandomModal(true);
-    };
-
-    const handleStartRandomTech = () => {
-        if (randomTech) {
-            onRandomSelect(randomTech.id);
-        }
-        setShowRandomModal(false);
-        setRandomTech(null);
-    };
-
-    return (
-        <div className="quick-actions">
-            <h3>Быстрые действия</h3>
-            <div className="actions-grid">
-                <button
-                    onClick={onMarkAllCompleted}
-                    className="action-btn complete-all"
-                >
-                    ✅ Отметить все как выполненные
-                </button>
-
-                <button
-                    onClick={onResetAll}
-                    className="action-btn reset-all"
-                >
-                    🔄 Сбросить все статусы
-                </button>
-
-                <button
-                    onClick={handleRandomSelect}
-                    className="action-btn random-select"
-                >
-                    🎲 Случайный выбор технологии
-                </button>
-
-                <button
-                    onClick={handleExport}
-                    className="action-btn export-btn"
-                >
-                    📤 Экспорт данных
-                </button>
-
-                <button
-                    onClick={onImportFromSteam}
-                    className="action-btn steam-import"
-                >
-                    🎮 Импорт из Steam
-                </button>
-            </div>
-
-            {/* Модальное окно экспорта */}
-            <Modal
-                isOpen={showExportModal}
-                onClose={() => setShowExportModal(false)}
-                title="Экспорт данных"
-                size="small"
-            >
-                <div className="export-modal-content">
-                    <p>✅ Данные успешно экспортированы!</p>
-                    <p>Файл был скачан автоматически.</p>
-                    <button
-                        onClick={() => setShowExportModal(false)}
-                        className="modal-confirm-btn"
-                    >
-                        Закрыть
-                    </button>
-                </div>
-            </Modal>
-
-            {/* Модальное окно случайного выбора */}
-            <Modal
-                isOpen={showRandomModal}
-                onClose={() => setShowRandomModal(false)}
-                title="Случайный выбор технологии"
-                size="small"
-            >
-                {randomTech && (
-                    <div className="random-tech-modal">
-                        <h4>Выбрана технология:</h4>
-                        <div className="random-tech-info">
-                            <strong>{randomTech.title}</strong>
-                            <p>{randomTech.description}</p>
-                        </div>
-                        <div className="modal-actions">
-                            <button
-                                onClick={handleStartRandomTech}
-                                className="modal-confirm-btn"
-                            >
-                                Начать изучение
-                            </button>
-                            <button
-                                onClick={() => setShowRandomModal(false)}
-                                className="modal-cancel-btn"
-                            >
-                                Отмена
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </Modal>
+  return (
+    <div className="quick-actions">
+      <div className="actions-header">
+        <h3>⚡ Быстрые действия</h3>
+        <div className="stats-badge">
+          📊 {stats.completed}/{stats.total} завершено
         </div>
-    );
+      </div>
+
+      <div className="actions-grid">
+        <button 
+          onClick={handleStartRandomTech}
+          className="action-btn random-tech"
+          disabled={stats.notStarted === 0}
+        >
+          <span className="action-icon">🎲</span>
+          <span className="action-text">Случайная технология</span>
+          <span className="action-count">{stats.notStarted}</span>
+        </button>
+
+        <button 
+          onClick={onMarkAllCompleted}
+          className="action-btn mark-all"
+          disabled={stats.completed === stats.total}
+        >
+          <span className="action-icon">✅</span>
+          <span className="action-text">Завершить все</span>
+        </button>
+
+        <button 
+          onClick={onResetAll}
+          className="action-btn reset-all"
+          disabled={stats.notStarted === stats.total}
+        >
+          <span className="action-icon">🔄</span>
+          <span className="action-text">Сбросить все</span>
+        </button>
+
+        <button 
+          onClick={onImportFromSteam}
+          className="action-btn steam-import"
+        >
+          <span className="action-icon">🎮</span>
+          <span className="action-text">Импорт из Steam</span>
+        </button>
+      </div>
+
+      <div className="progress-summary">
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: `${(stats.completed / stats.total) * 100 || 0}%` }}
+          ></div>
+        </div>
+        <div className="progress-stats">
+          <span>✅ {stats.completed} завершено</span>
+          <span>🔄 {stats.inProgress} в процессе</span>
+          <span>⏳ {stats.notStarted} не начато</span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default QuickActions;

@@ -1,0 +1,120 @@
+.data-importer {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.data-importer h3 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.drop-zone.dragging {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.drop-zone.error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.drop-zone-content p {
+  color: #b0b0b0;
+  margin: 0;
+}
+
+.file-input {
+  display: none;
+}
+
+.importing-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.importing-state .spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.import-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #ef4444;
+}
+
+.import-help {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.import-help h4 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.import-help ul {
+  color: #b0b0b0;
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.import-help li {
+  margin-bottom: 0.5rem;
+}
+
+.example-structure {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #b0b0b0;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .data-importer {
+    padding: 1.5rem;
+  }
+  
+  .drop-zone {
+    padding: 2rem 1rem;
+  }
+}
